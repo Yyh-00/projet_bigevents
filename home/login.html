@@ -16,8 +16,38 @@
     </div>
     <!-- 登陆注册区域 -->
     <div class="loginAndBox">
-
+        <div class="box-title"></div>
+        <!-- 登陆 -->
+        <div class="box-login">
+            <form class="layui-form" action="">
+                <!-- 用户名 -->
+                <div class="layui-form-item">
+                    <i class="layui-icon layui-icon-username"></i>
+                    <input type="text" name="username" required lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+                <!-- 密码 -->
+                <div class="layui-form-item">
+                    <i class="layui-icon layui-icon-password"></i>
+                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+                <!-- 登录按钮 -->
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-normal layui-btn-fluid" lay-submit>立即提交</button>
+                </div>
+                <div class="layui-form-item links">
+                    <a href="javascript:; " id="link-login">去注册账户</a>
+                </div>
+            </form>
+        </div>
+        <!-- 注册 -->
+        <div class="box-reg">
+            <a href="javascript:; " id="link-reg">去登陆</a>
+        </div>
     </div>
+    <!-- 导入jquery -->
+    <script src="/assets/lib/jquery.min.js"></script>
+    <!-- 导入自己的js样式 -->
+    <script src="/assets/js/login.js"></script>
 </body>
 
 </html>
