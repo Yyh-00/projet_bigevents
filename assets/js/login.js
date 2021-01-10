@@ -13,7 +13,9 @@ $(function() {
     });
     //从layui中获取form对象
     var form = layui.form;
-    // 通过form.verify()自定义校验规则
+    //从layui中获取layer对象
+    var layer = layui.layer
+        // 通过form.verify()自定义校验规则
     form.verify({
         username: function(value, item) { //value：表单的值、item：表单的DOM对象
             if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
@@ -48,12 +50,15 @@ $(function() {
     });
     // 监听注册表单的提交事件
     $("#form_reg").on('submit', function(e) {
-        e.preventDefault()
-        $.post('http://www.liulongbin.top:3007/api/reguser', { username: $('#form_reg [name=username]').val(), password: $('#form_reg [name=password]').val() }, function(res) {
+        e.preventDefault();
+        var data = { username: $('#form_reg [name=username]').val(), password: $('#form_reg [name=password]').val() };
+        $.post('http://www.liulongbin.top:3007/api/reguser', data, function(res) {
             if (res.status !== 0) {
-                return console.log(res.message);
+                return layer.msg(res.message);
             }
-            console.log('注册成功');
+            layer.msg(res.message);
+            //注册成功自动进入登录界面
+            $('#link-reg').click();
         })
 
     })
