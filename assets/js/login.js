@@ -50,16 +50,34 @@ $(function() {
     });
     // 监听注册表单的提交事件
     $("#form_reg").on('submit', function(e) {
-        e.preventDefault();
-        var data = { username: $('#form_reg [name=username]').val(), password: $('#form_reg [name=password]').val() };
-        $.post('http://www.liulongbin.top:3007/api/reguser', data, function(res) {
-            if (res.status !== 0) {
-                return layer.msg(res.message);
-            }
-            layer.msg(res.message);
-            //注册成功自动进入登录界面
-            $('#link-reg').click();
+            e.preventDefault();
+            var data = { username: $('#form_reg [name=username]').val(), password: $('#form_reg [name=password]').val() };
+            $.post('/api/reguser', data, function(res) {
+                if (res.status !== 0) {
+                    return layer.msg(res.message);
+                }
+                layer.msg(res.message);
+                //注册成功自动进入登录界面
+                $('#link-reg').click();
+            })
         })
-
+        //监听登陆表单的登陆时间
+    $("#form_login").on("submit", function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/api/login',
+            method: 'post',
+            data: $(this).serialize(),
+            success: function(res) {
+                if (res.status !== 0) {
+                    return layer.msg('登陆失败!');
+                };
+                layer.msg('登陆成功！');
+                //将登陆成功等得到的token保存在本地存储库localstorage中
+                localStorage.setItem('token', res.token);
+                console.log(res.token);
+                location.href = '../../home/index.html'
+            }
+        })
     })
 })
