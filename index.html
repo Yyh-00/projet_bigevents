@@ -17,7 +17,7 @@
             <!-- 头部区域（可配合layui已有的水平导航） -->
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">
+                    <a href="javascript:;" class="userinfo">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> 个人中心
                     </a>
                     <dl class="layui-nav-child">
@@ -32,9 +32,13 @@
 
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
+                <div class="userinfo">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    <span id="welcome">欢迎 ***</span>
+                </div>
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all">
-                    <li class="layui-nav-item"><a href=""><i class="layui-icon layui-icon-home"></i>首页</a></li>
+                    <li class="layui-nav-item layui-this"><a href="/home/dashboard.html" target="fm"><i class="layui-icon layui-icon-home"></i>首页</a></li>
                     <li class="layui-nav-item ">
                         <a class="" href="javascript:;"><i class="layui-icon layui-icon-list" style="font-size: 17px;"></i>文章管理</a>
                         <dl class="layui-nav-child">
@@ -57,7 +61,7 @@
 
         <div class="layui-body">
             <!-- 内容主体区域 -->
-            <div style="padding: 15px;">内容主体区域</div>
+            <iframe name="fm" src="/home/dashboard.html" frameborder="0"></iframe>
         </div>
 
         <div class="layui-footer">

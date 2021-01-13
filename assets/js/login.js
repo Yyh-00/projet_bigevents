@@ -76,7 +76,7 @@ $(function() {
                 //将登陆成功等得到的token保存在本地存储库localstorage中
                 localStorage.setItem('token', res.token);
                 console.log(res.token);
-                location.href = '../../home/index.html'
+                location.href = '/index.html'
             }
         })
     })
