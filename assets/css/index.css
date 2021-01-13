@@ -33,5 +33,30 @@ a {
     line-height: 60px;
     text-align: center;
     font-size: 12px;
+    /* 让文字不被选中 */
     user-select: none;
+}
+
+.layui-side-scroll .userinfo {
+    border: 1px solid #282b33;
+}
+
+.layui-nav-img {
+    width: 40px;
+    height: 40px;
+}
+
+.text-avator {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #009688;
+    border-radius: 50%;
+    line-height: 40px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    position: relative;
+    top: 4px;
+    margin-right: 8px;
 }
