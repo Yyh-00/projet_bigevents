@@ -61,10 +61,10 @@
 
          }
 
-     }
+     };
 
+     //禁用浏览器后退按钮
      function disableBack() {
-         //禁用浏览器回退按钮
          if (window.history && window.history.pushState) {
              $(window).on('popstate', function() {
                  window.history.pushState('forward', null, '');
