@@ -8,11 +8,12 @@
              localStorage.removeItem('token');
              //跳转到登陆界面
              location.href = "/login.html";
-
+             disableBack();
              //关闭comfirm询问框
              layer.close(index);
          });
      });
+
      //封装获取用户信息函数
      function getUserinfo() {
          $.ajax({
@@ -60,5 +61,17 @@
 
          }
 
+     }
+
+     function disableBack() {
+         //禁用浏览器回退按钮
+         if (window.history && window.history.pushState) {
+             $(window).on('popstate', function() {
+                 window.history.pushState('forward', null, '');
+                 window.history.forward(1);
+             });
+         }
+         window.history.pushState('forward', null, '');
+         window.history.forward(1);
      }
  })

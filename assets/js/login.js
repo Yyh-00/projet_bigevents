@@ -1,4 +1,5 @@
 $(function() {
+
     //点击去注册账号链接
     $('#link-login').on('click contextmenu selectstart', function(e) {
         $(".box-login").hide();
@@ -79,5 +80,6 @@ $(function() {
                 location.href = '/index.html'
             }
         })
-    })
+    });
+
 })
