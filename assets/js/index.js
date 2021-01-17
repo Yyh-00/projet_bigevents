@@ -1,6 +1,6 @@
  $(function() {
      //调用获去用户信息
-     getUserinfo();
+     getUserInfo();
      //实现退出功能
      $("#btnLoginout").on("click", function() {
          layer.confirm('确定退出登录？', { icon: 3, title: '提示' }, function(index) {
@@ -15,7 +15,7 @@
      });
 
      //封装获取用户信息函数
-     function getUserinfo() {
+     function getUserInfo() {
          $.ajax({
              url: '/my/userinfo',
              method: 'get',

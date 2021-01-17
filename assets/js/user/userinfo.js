@@ -17,15 +17,52 @@ $(function() {
         }
     })
 
+    initUserInfo();
     //初始化用户信息
-    $.ajax({
-        url: '/my/userinfo',
-        method: 'get',
-        success: function(res) {
-            if (res.status !== 0) {
-                layer.msg('获取用户信息失败')
+    function initUserInfo() {
+        $.ajax({
+            url: '/my/userinfo',
+            method: 'get',
+            success: function(res) {
+                if (res.status !== 0) {
+                    layer.msg('获取用户信息失败')
+                }
+                // console.log(res);
+                //利用layui的form.val（）进行表单赋值
+                form.val("userinfo", res.data);
             }
-            console.log(res);
-        }
-    })
+        })
+    };
+
+    //重置表单的数据
+    $("#btnReset").on("click", function(e) {
+        //组织按钮的默认重置表单里所有数据
+        e.preventDefault();
+        //在调用用户初始化数据
+        initUserInfo();
+    });
+
+    //监听提交按钮
+    $(".layui-form").on('submit', function(e) {
+        //阻止表单的默认提交行为
+        e.preventDefault();
+        //发起ajax请求
+        $.ajax({
+            url: '/my/userinfo',
+            method: 'post',
+            //获取表单所有数据
+            data: $(this).serialize(),
+            success: function(res) {
+                console.log(res);
+                if (res.status !== 0) {
+                    return layer.msg('更新用户信息失败！')
+                };
+                layer.msg('更新用户信息成功！');
+
+                //子页面调用父页面的方法，渲染用户头像和欢迎信息
+                window.parent.getUserInfo();
+            }
+        })
+    });
+
 })
