@@ -53,7 +53,7 @@ $(function() {
             //获取表单所有数据
             data: $(this).serialize(),
             success: function(res) {
-                console.log(res);
+                // console.log(res);
                 if (res.status !== 0) {
                     return layer.msg('更新用户信息失败！')
                 };
@@ -61,6 +61,10 @@ $(function() {
 
                 //子页面调用父页面的方法，渲染用户头像和欢迎信息
                 window.parent.getUserInfo();
+                // console.log(window.parent.getUserInfo());
+                // console.log(window);
+                // console.log(window.parent);
+                // console.log(window.parent.document);
             }
         })
     });

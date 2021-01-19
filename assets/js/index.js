@@ -1,6 +1,7 @@
 $(function() {
     //调用获去用户信息
     getUserInfo();
+
     //实现退出功能
     $("#btnLoginout").on("click", function() {
         layer.confirm('确定退出登录？', { icon: 3, title: '提示' }, function(index) {
@@ -16,6 +17,8 @@ $(function() {
 
     //封装获取用户信息函数
     function getUserInfo() {
+        /*  console.log(getUserInfo)
+         return */
         $.ajax({
             url: '/my/userinfo',
             method: 'get',
@@ -44,6 +47,8 @@ $(function() {
         })
     }
 
+    //子页面用到的方法需要先将方法复制给windows
+    window.getUserInfo = getUserInfo;
     //渲染用户头像
     function renderAvatar(user) {
         //1.获取用户名称
