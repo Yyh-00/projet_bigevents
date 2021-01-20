@@ -47,8 +47,9 @@ $(function() {
         })
     }
 
-    //子页面用到的方法需要先将方法复制给windows
+    //子页面用到的方法需要先将方法复制给window
     window.getUserInfo = getUserInfo;
+
     //渲染用户头像
     function renderAvatar(user) {
         //1.获取用户名称
@@ -67,6 +68,7 @@ $(function() {
         }
 
     };
+    window.renderAvatar = renderAvatar;
 
     //禁用浏览器后退按钮
     function disableBack() {
