@@ -15,6 +15,42 @@
         <div class="layui-card-body">
             <!-- 筛选区域 -->
             <!-- 列表区域 -->
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col width="180">
+                    <col width="180">
+                    <col width="150">
+                    <col width="150">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>文章标题</th>
+                        <th>分类</th>
+                        <th>发表时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <script type="text/html" id="tpl-table">
+                {{each data}}
+                <tr>
+                    <td>{{$value.title}}</td>
+                    <td>{{$value.cate_name}}</td>
+                    <td>{{$value.pub_date|date}}</td>
+                    <td>{{$value.state}}</td>
+                    <td>
+                        <button type="button" class="layui-btn layui-btn-xs btn-edit" data-id="{{$value.Id}}">编辑</button>
+                        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger delete" data-id="{{$value.Id}}">删除</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </script>
             <!-- 分页区域 -->
         </div>
     </div>
@@ -22,6 +58,7 @@
     <script src="/assets/lib/layui/layui.all.js"></script>
     <script src="/assets/lib/jquery.min.js"></script>
     <script src="/assets/js/baseAPI2.js"></script>
+    <script src="/assets/lib/template-web.js"></script>
     <script src="/assets/js/article/art-list.js"></script>
 </body>
 
