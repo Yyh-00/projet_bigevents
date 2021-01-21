@@ -1,5 +1,6 @@
 $(function() {
     var layer = layui.layer;
+    var form = layui.form;
 
     initArtCate()
 
@@ -7,10 +8,10 @@ $(function() {
     function initArtCate() {
         $.ajax({
             method: 'get',
-            url: 'http://api-breakingnews-web.itheima.net/my/article/cates',
-            headers: {
-                Authorization: localStorage.getItem('token')
-            },
+            url: '/my/article/cates',
+            // headers: {
+            //     Authorization: localStorage.getItem('token')
+            // },
             success: function(res) {
                 // console.log(res);
                 var htmlStr = template('tpl-table', res);
@@ -38,12 +39,13 @@ $(function() {
 
         $.ajax({
             method: 'post',
-            url: 'http://api-breakingnews-web.itheima.net/my/article/addcates',
+            url: '/my/article/addcates',
             data: $('#form-add').serialize(),
-            headers: {
-                Authorization: localStorage.getItem('token')
-            },
+            // headers: {
+            //     Authorization: localStorage.getItem('token')
+            // },
             success: function(res) {
+                // console.log(res);
                 if (res.status !== 0) {
                     return layer.msg('添加文章类别失败!')
                 }
@@ -64,6 +66,67 @@ $(function() {
             area: ['500px', '250px'],
             title: '修改文章分类',
             content: $('#tpl-edit').html()
+        });
+
+        //获取元素自定义属性id
+        var id = $(this).attr('data-id')
+
+        //编辑按钮弹出框添加原始数据
+        $.ajax({
+            method: 'get',
+            url: '/my/article/cates/' + id,
+            // headers: {
+            //     Authorization: localStorage.getItem('token')
+            // },
+            success: function(res) {
+                form.val('form-edit', res.data)
+            }
+        })
+    })
+
+    //通过代理的方式为确认修改按钮绑定提交事件
+    $('body').on('submit', '#form-edit', function(e) {
+        //阻止表单默认提交事件
+        e.preventDefault();
+
+        $.ajax({
+            method: 'post',
+            url: '/my/article/updatecate',
+            data: $(this).serialize(),
+            success: function(res) {
+                if (res.status !== 0) {
+                    return layer.msg('文章修改失败')
+                }
+                layer.msg('文章修改成功');
+
+                initArtCate()
+                layer.close(indexEdit)
+            }
+        })
+    })
+
+    //通过代理的方式为删除按钮绑定点击事件
+    $("tbody").on('click', '.delete', function() {
+        var id = $(this).attr('data-id');
+
+        layer.confirm('确定删除吗？', { icon: 3, title: '提示' }, function(index) {
+            // var id = $(this).attr('data-id');
+            // return console.log(id);
+            $.ajax({
+                method: "get",
+                url: '/my/article/deletecate/' + id,
+                success: function(res) {
+                    if (res.status !== 0) {
+                        return layer.msg('删除类别失败！')
+                    }
+
+                    layer.msg('删除类别成功！');
+                    //删除询问框
+                    layer.close(index);
+                    initArtCate()
+                }
+
+            })
         });
     })
 })
