@@ -14,6 +14,7 @@ $.ajaxPrefilter(function(options) {
 
     //全局统一挂载complete函数
     options.complete = function(res) {
+        console.log('执行了complete');
         console.log(res.responseJSON);
         if (res.responseJSON.status === 1 && res.responseJSON.message === '身份认证失败！') {
             //强制清除本地存储的内容
