@@ -1,5 +1,7 @@
 $(function() {
     var layer = layui.layer;
+    var form = layui.form;
+    var laypage = layui.laypage
 
     var q = {
         pagenum: 1, //页码值，默认请求第一页的数据
@@ -20,15 +22,17 @@ $(function() {
         var mm = zeroPadding(dt.getMinutes());
         var ss = zeroPadding(dt.getSeconds());
 
-        return y + '-' + m + '-' + 'd' + '' + 'hh' + ':' + 'mm' + ':' + 'ss'
+        return y + '-' + m + '-' + d + '    ' + hh + ':' + mm + ':' + ss
     };
 
     //时间补零
     function zeroPadding(n) {
-        return n = n < 0 ? n : '0' + n;
+        return n = n > 9 ? n : '0' + n;
     }
 
     initTable();
+    initCate();
+
     //获取表格的数据
     function initTable() {
         $.ajax({
@@ -43,8 +47,76 @@ $(function() {
                 layer.msg('获取文章列表数据成功！')
                 var htmlStr = template('tpl-table', res);
                 $('tbody').html(htmlStr)
-            }
 
+                //调用分页渲染  
+                renderPage(res.total)
+            }
+        })
+    }
+
+    //获取文章分类
+    function initCate() {
+        $.ajax({
+            method: 'get',
+            url: '/my/article/cates',
+            success: function(res) {
+                if (res.status !== 0) {
+                    return layer.msg('获取文章分类失败！')
+                }
+                var htmlStr = template('tpl-cate', res);
+                $("[name=cate_id]").html(htmlStr);
+
+                //通过layui重新渲染动态获得的表单数据
+                form.render()
+            }
+        })
+    }
+
+    //为筛选表单绑定提交事件
+    $("#form-search").on('submit', function(e) {
+        e.preventDefault();
+
+        //获取表单中选项的值
+        var cate_id = $('[name=cate_id]').val();
+        var state = $('[name=staste]').val();
+
+        //给查询对象q中的相应属性赋值
+        q.cate_id = cate_id;
+        q.state = state;
+
+        initTable();
+        // layer.msg('筛选成功')
+
+    })
+
+    //定义分页渲染的方法
+    function renderPage(total) {
+        laypage.render({
+            elem: 'pageBox', //指定分页容器
+            count: total, //数据总数
+            limit: q.pagesize,
+            curr: q.pagenum, //设置默认被选中的分页
+            layout: ['count', 'limit', 'prev', 'page', 'next', 'skip'],
+            limits: [2, 3, 5, 10], //定义每条页数的选择项
+            //分页发生切换的时候，触发jump回调
+            //触发jump回调的方式有两种
+            //1.点击页码的时候会触发jump回调
+            //2.只要调用了renderPage方法就会触发jump回调
+            jump: function(obj) {
+
+                //把最新的页码值复制给q查询对象中
+                q.pagenum = obj.cuur;
+                //把条目数赋值给q的pagesize参数
+                q.pagesize = obj.limit;
+
+                //可以通过first的值来判断通过哪种方式触发的jump回调
+                //如果first的值为true，证明方式2触发
+                //否则就是方式1触发
+                if (!first) {
+                    //重新渲染表格
+                    initTable();
+                }
+            }
         })
     }
 })

@@ -14,24 +14,20 @@
         <div class="layui-card-header">文章列表</div>
         <div class="layui-card-body">
             <!-- 筛选区域 -->
-            <form class="layui-form" action="">
+            <form class="layui-form" id="form-search">
                 <div class="layui-form-item layui-inline">
-                    <select name="city" lay-verify="">
-                        <option value="">所有分类</option>
-                        <option value="010">北京</option>
-                        <option value="021">上海</option>
-                        <option value="0571">杭州</option>
-                      </select>
+                    <select name="cate_id">
+                    </select>
                 </div>
                 <div class="layui-form-item layui-inline">
-                    <select name="city" lay-verify="">
+                    <select name="state">
                         <option value="">所有状态</option>
                         <option value="已发布">已发布</option>
                         <option value="草稿">草稿</option>
                       </select>
                 </div>
                 <div class="layui-form-item layui-inline">
-                    <button class="layui-btn layui-inline" lay-submit lay-filter="formDemo">筛选</button>
+                    <button class="layui-btn layui-inline" lay-submit>筛选</button>
                 </div>
             </form>
             <!-- 列表区域 -->
@@ -56,23 +52,35 @@
 
                 </tbody>
             </table>
-            <script type="text/html" id="tpl-table">
-                {{each data}}
-                <tr>
-                    <td>{{$value.title}}</td>
-                    <td>{{$value.cate_name}}</td>
-                    <td>{{$value.pub_date|date}}</td>
-                    <td>{{$value.state}}</td>
-                    <td>
-                        <button type="button" class="layui-btn layui-btn-xs btn-edit" data-id="{{$value.Id}}">编辑</button>
-                        <button type="button" class="layui-btn layui-btn-xs layui-btn-danger delete" data-id="{{$value.Id}}">删除</button>
-                    </td>
-                </tr>
-                {{/each}}
-            </script>
+
             <!-- 分页区域 -->
+            <div id="pageBox"></div>
         </div>
     </div>
+
+    <!-- 列表区域模板 -->
+    <script type="text/html" id="tpl-table">
+        {{each data}}
+        <tr>
+            <td>{{$value.title}}</td>
+            <td>{{$value.cate_name}}</td>
+            <td>{{$value.pub_date|date}}</td>
+            <td>{{$value.state}}</td>
+            <td>
+                <button type="button" class="layui-btn layui-btn-xs btn-edit" data-id="{{$value.Id}}">编辑</button>
+                <button type="button" class="layui-btn layui-btn-xs layui-btn-danger delete" data-id="{{$value.Id}}">删除</button>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+
+    <!-- 文章分类模板 -->
+    <script type="text/html" id="tpl-cate">
+        <option value="">所有分类</option>
+        {{each data}}
+        <option value="{{$value.Id}}">{{$value.name}}</option>
+        {{/each}}
+    </script>
 
     <script src="/assets/lib/layui/layui.all.js"></script>
     <script src="/assets/lib/jquery.min.js"></script>
