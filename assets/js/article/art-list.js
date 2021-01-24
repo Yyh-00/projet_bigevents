@@ -40,7 +40,7 @@ $(function() {
             url: '/my/article/list',
             data: q,
             success: function(res) {
-                // return console.log(res);
+                console.log(res);
                 if (res.status !== 0) {
                     return layer.msg('获取文章列表数据失败！')
                 }
@@ -78,14 +78,17 @@ $(function() {
 
         //获取表单中选项的值
         var cate_id = $('[name=cate_id]').val();
-        var state = $('[name=staste]').val();
+        var state = $('[name=state]').val();
 
-        //给查询对象q中的相应属性赋值
+        //给查询对象q中的相应属性赋值.
         q.cate_id = cate_id;
         q.state = state;
+        // console.log(cate_id);
+        // console.log(state);
+        console.log(q);
 
         initTable();
-        // layer.msg('筛选成功')
+        layer.msg('筛选成功')
 
     })
 
@@ -102,10 +105,10 @@ $(function() {
             //触发jump回调的方式有两种
             //1.点击页码的时候会触发jump回调
             //2.只要调用了renderPage方法就会触发jump回调
-            jump: function(obj) {
+            jump: function(obj, first) {
 
                 //把最新的页码值复制给q查询对象中
-                q.pagenum = obj.cuur;
+                q.pagenum = obj.curr;
                 //把条目数赋值给q的pagesize参数
                 q.pagesize = obj.limit;
 
