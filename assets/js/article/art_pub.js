@@ -96,13 +96,14 @@ $(function() {
             method: 'post',
             url: '/my/article/add',
             data: fd,
+            //请求中参数时formdata格式是，必须带下面两个方法
             contentType: false,
             processData: false,
             success: function(res) {
                 if (res.status !== 0) {
                     return layer.msg('添加文章失败！')
                 }
-                layer.msg('添加文章失败！');
+                layer.msg('添加文章成功！');
 
                 location.href = '/article/art_list.html'
             }

@@ -40,7 +40,6 @@ $(function() {
             url: '/my/article/list',
             data: q,
             success: function(res) {
-                console.log(res);
                 if (res.status !== 0) {
                     return layer.msg('获取文章列表数据失败！')
                 }
@@ -97,10 +96,11 @@ $(function() {
         laypage.render({
             elem: 'pageBox', //指定分页容器
             count: total, //数据总数
-            limit: q.pagesize,
+            limit: q.pagesize, //每页显示几条数据
             curr: q.pagenum, //设置默认被选中的分页
             layout: ['count', 'limit', 'prev', 'page', 'next', 'skip'],
             limits: [2, 3, 5, 10], //定义每条页数的选择项
+
             //分页发生切换的时候，触发jump回调
             //触发jump回调的方式有两种
             //1.点击页码的时候会触发jump回调
@@ -122,4 +122,35 @@ $(function() {
             }
         })
     }
+
+    //用代理的方式给删除按钮绑定点击事件
+    $('tbody').on('click', '.delete', function() {
+        var id = $(this).attr('data-id')
+            //获取表格中删除按钮的个数
+        var len = $(".delete").length
+
+        layer.confirm('确定删除？', { icon: 3, title: '提示' }, function(index) {
+            $.ajax({
+                method: 'get',
+                url: '/my/article/delete/' + id,
+                success: function(res) {
+                    if (res.status !== 0) {
+                        return layer.msg("删除失败！")
+                    }
+                    layer.msg("删除成功！");
+                    //当数据删除完成后，需要判断当前这一页中，是否还有剩余的数据
+                    //如果没有剩余的数据了，则让页码值-1
+                    //之后再重新调用inittable方法
+                    if (len === 1) {
+                        q.pagenum = q.pagenum === 1 ? 1 : q.pagenum - 1;
+                        initTable()
+                    }
+
+                }
+
+            })
+
+            layer.close(index);
+        });
+    })
 })
